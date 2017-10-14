@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server/server.js",
     "test": "mocha test/**/*.test.js",
     "test-watch": "nodemon --exect 'npm test' -L"
+  },
+  "engines": {
+    "node": "8.6.0"
   },
   "author": "",
   "license": "ISC",
