@@ -105,5 +105,11 @@ describe('GET /todos/:id', ()=>{
             .get('/todos/123abc')
             .expect(404)
             .end(done);
+    });
+});
+
+describe('POST /todos/:id delete item', () => {
+    it('should delete one item by id', (done)=>{
+        
     })
 })
