@@ -13,27 +13,6 @@ const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
-app.post('/users', (req, res) => {
-    let user = new User({
-        email: req.body.email
-    })
-
-    user.save()
-        .then((user) => {
-            res.status(200).send({user});
-        }).catch((err)=>{
-            res.status(400).send()
-        })
-})
-
-app.get('/users', (req, res) => {
-    User.find().then((users) => {
-        res.send({users})
-    }).catch((err) => {
-        res.status(400).send()
-    })
-})
-
 app.post('/todos', (req, res) => {
     let todo = new Todo({
         text: req.body.text
@@ -106,7 +85,28 @@ app.patch('/todos/:id', (req, res) => {
         res.send({todo})
     }).catch(err => res.status(400).send())
 
+});
+
+app.post('/users', (req, res) => {
+    let body = _.pick(req.body, ['email', 'password'])
+    let user = new User(body)
+
+    user.save().then(() => {
+            return user.generateAuthToken();
+        }).then((token) => {
+            res.header('x-auth', token).send(user);
+        }).catch((err)=>{
+            res.status(400).send(err)
+        })
 })
+
+// app.get('/users', (req, res) => {
+//     User.find().then((users) => {
+//         res.send({users})
+//     }).catch((err) => {
+//         res.status(400).send()
+//     })
+// })
 
 app.listen(port, () => {
     console.log(`started up at port ${port}`)
