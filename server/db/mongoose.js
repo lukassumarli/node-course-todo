@@ -7,7 +7,7 @@ mongoose.Promise = global.Promise;
 //     mlab: 'mongodb://jonstall:123456@ds119345.mlab.com:19345/node-todo-api'
 // }
 
-mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost:27017/TodoApp', {
+mongoose.connect( process.env.MONGODB_URI, {
     useMongoClient: true
 });
 
