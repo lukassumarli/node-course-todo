@@ -12,6 +12,27 @@ const port = process.env.PORT || 4200;
 
 app.use(bodyParser.json());
 
+app.post('/users', (req, res) => {
+    let user = new User({
+        email: req.body.email
+    })
+
+    user.save()
+        .then((user) => {
+            res.status(200).send({user});
+        }).catch((err)=>{
+            res.status(400).send()
+        })
+})
+
+app.get('/users', (req, res) => {
+    User.find().then((users) => {
+        res.send({users})
+    }).catch((err) => {
+        res.status(400).send()
+    })
+})
+
 app.post('/todos', (req, res) => {
     let todo = new Todo({
         text: req.body.text
