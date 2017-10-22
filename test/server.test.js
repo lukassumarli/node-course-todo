@@ -259,9 +259,14 @@ describe('POST /users/login', () => {
                 if(err) {
                     return done(err)
                 }
-
+                
+                // User.findById(users[1]._id).then((user) => {
+                //     expect(user.tokens[0]).toHaveProperty({
+                //         access: 'auth',
+                //         token: res.headers['x-auth']
+                //     });
                 User.findById(users[1]._id).then((user) => {
-                    expect(user.tokens[0]).toContainEqual({
+                    expect(user.toObject().tokens[0]).toMatchObject({
                         access: 'auth',
                         token: res.headers['x-auth']
                     });
@@ -297,4 +302,4 @@ describe('POST /users/login', () => {
 
             })
     });
-})
+});
