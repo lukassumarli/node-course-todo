@@ -3,25 +3,30 @@ const {ObjectID} = require('mongodb');
 const {Todo} = require('../../server/models/todo');
 const {User} = require('../../server/models/user');
 
+let userIdOne = new ObjectID();
+let userIdTwo = new ObjectID();
+
 const todos = [
     {
         _id: new ObjectID(),
-        text: 'First test todo'
+        text: 'First test todo',
+        _creator: userIdOne
     },
     {
         _id: new ObjectID(),
         text: 'Second test todo',
         completed: true,
-        completedAt: 333
+        completedAt: 333,
+        _creator: userIdTwo
     },
     {
         _id: new ObjectID(),
-        text: 'Third test todo'
+        text: 'Third test todo',
+        _creator: userIdOne
     }
 ];
 
-let userIdOne = new ObjectID();
-let userIdTwo = new ObjectID();
+
 
 const users = [
     {
@@ -39,7 +44,14 @@ const users = [
     {
         _id: userIdTwo,
         email: 'jonstall2015@gmail.com',
-        password: 'userTwoPass'
+        password: 'userTwoPass',
+        tokens: [
+            {
+                access: 'auth',
+                token: jwt.sign({_id: userIdTwo, access: 'auth'}, 'abc123').toString()
+            }
+
+        ]
     }
 ];
 
